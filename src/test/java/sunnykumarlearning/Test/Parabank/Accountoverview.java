@@ -1,6 +1,5 @@
 package sunnykumarlearning.Test.Parabank;
 
-import java.awt.Window;
 import java.util.List;
 import java.util.Random;
 
@@ -8,13 +7,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Signup {
-
+public class Accountoverview {
+	
 	public static void main(String[] args) throws InterruptedException {
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();
@@ -62,5 +60,24 @@ public class Signup {
 		Assert.assertEquals(welcomeMessage.getText(), "Welcome "+username);
 		Assert.assertEquals(successMessage.getText(), "Your account was created successfully. You are now logged in.");
 
+		//System.out.println("welcomeMessage.getText() :: "+welcomeMessage.getText());
+		//System.out.println("successMessage.getText() :: "+successMessage.getText()); 
+		//driver.quit();
+		
+
+	
+	/****************************Account Overview**************/
+	WebElement accountOverview = driver.findElement(By.xpath("//a[normalize-space()='Accounts Overview']"));
+	accountOverview.click();
+	Thread.sleep(2000);
+	
+	List<WebElement> accountOverview1 = driver.findElements(By.xpath("//table[@id='accountTable']//tbody/tr[2]/td"));
+	for(int i=0;i<accountOverview1.size();i++)
+	{
+		System.out.println("Value of i(Account overview) is "+i+" : "+accountOverview1.get(i).getText());
 	}
+
+	/******************************//**************************/
+
+}
 }

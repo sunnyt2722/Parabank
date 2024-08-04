@@ -1,7 +1,5 @@
 package sunnykumarlearning.Test.Parabank;
 
-import java.awt.Window;
-import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -13,8 +11,8 @@ import org.testng.Assert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Signup {
-
+public class Billpay {
+	
 	public static void main(String[] args) throws InterruptedException {
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();
@@ -62,5 +60,47 @@ public class Signup {
 		Assert.assertEquals(welcomeMessage.getText(), "Welcome "+username);
 		Assert.assertEquals(successMessage.getText(), "Your account was created successfully. You are now logged in.");
 
-	}
+		//System.out.println("welcomeMessage.getText() :: "+welcomeMessage.getText());
+		//System.out.println("successMessage.getText() :: "+successMessage.getText()); 
+		//driver.quit();
+
+	
+	/************************Bill Pay****************************/
+	WebElement PayeeName = driver.findElement(By.xpath("//input[@name='payee.name']"));
+	WebElement Address = driver.findElement(By.xpath("//input[@name='payee.address.street']"));
+	WebElement City = driver.findElement(By.xpath("//input[@name='payee.address.city']"));
+	WebElement State = driver.findElement(By.xpath("//input[@name='payee.address.state']"));
+	WebElement ZipCode = driver.findElement(By.xpath("//input[@name='payee.address.zipCode']"));
+	WebElement Phone = driver.findElement(By.xpath("//input[@name='payee.phoneNumber']"));
+	WebElement Account = driver.findElement(By.xpath("//input[@name='payee.accountNumber']"));
+	WebElement verifyAccount = driver.findElement(By.xpath("//input[@name='verifyAccount']"));
+	WebElement Amount = driver.findElement(By.xpath("//input[@name='amount']"));
+	
+	PayeeName.sendKeys("angad");
+	Address.sendKeys("lomdon");
+	City.sendKeys("ortanio");
+	State.sendKeys("UK");
+	ZipCode.sendKeys("35ge3");
+	Phone.sendKeys("555656565");
+	Account.sendKeys("45565656");
+	verifyAccount.sendKeys("45565656");
+	Amount.sendKeys("1111");
+	
+	
+	
+	WebElement frmAccountclick = driver.findElement(By.xpath("//select[@name='fromAccountId']"));
+	frmAccountclick.click();
+	
+	Select frmAccount = new Select(driver.findElement(By.xpath("//select[@name='fromAccountId']")));
+	frmAccount.selectByIndex(1);
+	
+	WebElement sendPayment = driver.findElement(By.xpath("//input[@value='Send Payment']"));
+	sendPayment.click();
+	Thread.sleep(3000);
+	WebElement paymentDone = driver.findElement(By.xpath("//p[contains(text(),'Bill Payment to')]"));
+	System.out.println("Payment Complete: " + paymentDone.getText());
+
+	/**************************///*******************************/
+
+}
 }
