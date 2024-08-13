@@ -1,28 +1,23 @@
 package sunnykumarlearning.Test.Parabank;
 
-import java.util.List;
 import java.util.Random;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Accountoverview {
-	
-	public static void main(String[] args) throws InterruptedException {
-		WebDriverManager.chromedriver().setup();
-		WebDriver driver = new ChromeDriver();
+public class SignUp {
+
+	public static void main(WebDriver driver) throws InterruptedException {
+
 		driver.manage().window().maximize();
 		String username = "bullet" + new Random().nextInt(1000);
-		
-		
+
 		driver.get("https://parabank.parasoft.com/parabank/admin.htm");
 		driver.findElement(By.xpath("//a[text()='Register']")).click();
-		
+
 		WebElement custFirstName = driver.findElement(By.id("customer.firstName"));
 		WebElement custLastName = driver.findElement(By.id("customer.lastName"));
 		WebElement addStreet = driver.findElement(By.id("customer.address.street"));
@@ -34,7 +29,7 @@ public class Accountoverview {
 		WebElement usname = driver.findElement(By.id("customer.username"));
 		WebElement paswrd = driver.findElement(By.id("customer.password"));
 		WebElement cnfrmPassword = driver.findElement(By.id("repeatedPassword"));
-		
+
 		custFirstName.sendKeys("suny");
 		custLastName.sendKeys("singh");
 		addStreet.sendKeys("patna");
@@ -46,7 +41,7 @@ public class Accountoverview {
 		usname.sendKeys(username);
 		paswrd.sendKeys("1234");
 		cnfrmPassword.sendKeys("1234");
-	
+
 		driver.findElement(By.cssSelector("[value='Register']")).click();
 
 		WebElement welcomeMessage = driver.findElement(By.xpath("//h1"));
@@ -54,30 +49,24 @@ public class Accountoverview {
 
 		WebElement usertext = driver.findElement(By.xpath("//h1[@class='title']"));
 		WebElement welcommessage = driver.findElement(By.xpath("//*[@id=\"rightPanel\"]/p"));
-		System.out.println( usertext.getText() + " : " + welcommessage.getText());
-		
+		System.out.println(usertext.getText() + " : " + welcommessage.getText());
 
-		Assert.assertEquals(welcomeMessage.getText(), "Welcome "+username);
+		Assert.assertEquals(welcomeMessage.getText(), "Welcome " + username);
 		Assert.assertEquals(successMessage.getText(), "Your account was created successfully. You are now logged in.");
 
-		//System.out.println("welcomeMessage.getText() :: "+welcomeMessage.getText());
-		//System.out.println("successMessage.getText() :: "+successMessage.getText()); 
-		//driver.quit();
-		
-
-	
-	/****************************Account Overview**************/
-	WebElement accountOverview = driver.findElement(By.xpath("//a[normalize-space()='Accounts Overview']"));
-	accountOverview.click();
-	Thread.sleep(2000);
-	
-	List<WebElement> accountOverview1 = driver.findElements(By.xpath("//table[@id='accountTable']//tbody/tr[2]/td"));
-	for(int i=0;i<accountOverview1.size();i++)
-	{
-		System.out.println("Value of i(Account overview) is "+i+" : "+accountOverview1.get(i).getText());
 	}
 
-	/******************************//**************************/
+	static WebDriver chromeSetup() {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
 
-}
+		try {
+			SignUp.main(driver);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
+
+		return driver;
+	}
 }
